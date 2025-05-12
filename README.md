@@ -26,7 +26,7 @@ The model achieved the following performance metrics on the test dataset:
 *   **Accuracy:** \[0.940]
 *   **F1-score:** \[0.680]
 *   **AUC:** \[0.965]
-*   **Best Threshold:** \[13.341750]
+*   **Best Threshold:** \[13.341736]
 
 Confusion Matrix:
 [12475  332]

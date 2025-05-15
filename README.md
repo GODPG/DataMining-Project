@@ -55,26 +55,34 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 - Run the notebooks in sequence
 - Trained ConvBiGRU Autoencoder model will be in the models directory.
 
-├── data
-│   ├── train/
-│   │   ├── machine-1-1.txt
-│   │   ├── machine-1-2.txt
-│   │   └── ...
-│   ├── test/
-│   │   ├── machine-1-1.txt
-│   │   ├── machine-1-2.txt
-│   │   └── ...
-│   ├── test_label.txt
-│   ├── interpretation_label.txt
-├── models
-│   ├── convbigru_autoencoder.h5
-│   ├── convbigru_autoencoder.json
-├── notebooks
-│   ├── 1. exploratory_data_analysis.ipynb
-│   ├── 2. data_preprocessing.ipynb
-│   ├── 3. model_building_training.ipynb
-│   ├── 4. anomaly_detection_evaluation.ipynb
+├── Processed_data
+│   ├── machine-1-1/
+│   │   ├── machine-1-1_test.csv
+│   │   └──  machine-1-1_train.csv
+├── SeverMachineDataset
+│   ├── interpretation_label
+│   │   └── machine-1-1.txt
+│   ├── test
+│   │   └── machine-1-1.txt
+│   ├── test_label
+│   │   └── machine-1-1.txt
+│   ├── train
+│   │   └── machine-1-1.txt
+│   └── LICENSE
+├── code
+│   ├── data_cleaning.py
+│   ├── data_preprocessing.py
+│   ├── evaluate.py
+│   ├── main.py
+│   ├── model.py
+│   ├── train.py
+│   └── visualize.py
+├── saved_models
+│   ├── conv_bi_gru_autoencoder.pth
+│   └── scaler_new.pkl
 ├── README.md
+├── Technical Report.ipynb
+└── requirement.txt
 </pre>
 
 #### Data Pre-processing Steps

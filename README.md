@@ -48,10 +48,7 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 *   **interpretation_label.txt:** Metrics contributing to each anomaly.
 
 ## Team collaboration - directory structure
-PGspeed:
-[文件]
 
-PGspeed:
 #### Instructions
 <pre>
 - Clone the GitHub repository

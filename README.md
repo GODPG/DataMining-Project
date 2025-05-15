@@ -35,7 +35,7 @@ NetMan ([https://github.com/NetManAIOps/OmniAnomaly](https://github.com/NetManAI
 Data Set Characteristics:  Time-Series, Multivariate
 Area: System Monitoring, Anomaly Detection
 Attribute Characteristics: Real
-Missing Values? [Specify if there are missing values, and how they are handled]
+Missing Values? None
 </pre>
 
 #### Attribute Information:
@@ -48,7 +48,10 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 *   **interpretation_label.txt:** Metrics contributing to each anomaly.
 
 ## Team collaboration - directory structure
+PGspeed:
+[文件]
 
+PGspeed:
 #### Instructions
 <pre>
 - Clone the GitHub repository
@@ -85,6 +88,7 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 └── requirement.txt
 </pre>
 
+
 #### Data Pre-processing Steps
 <pre>
 1.  Data Windowing: Create sequences using a sliding window.
@@ -95,21 +99,89 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 ## Data Preparation and Visualization
 <pre>
 Code Used: Python
-Packages: Pandas, NumPy, Matplotlib, Seaborn
+Packages: Pandas, NumPy, Matplotlib, Seaborn, plotly
 </pre>
 
 ## Data Cleansing, processing, and modeling
 <pre>
 Code Used: Python
-Packages: Pandas, scikit-learn, TensorFlow, Keras
+Packages: Pandas, scikit-learn, torch, torch.nn, torch.optim
 </pre>
 
-**ConvBiGRU Autoencoder Architecture:**
+**ConvBiGRU Autoencoder Model:**
 <pre>
-- Encoder: Convolutional layers + Bidirectional GRU layers
-- Decoder: GRU layers + Deconvolutional layers
-- Loss Function: Mean Squared Error (MSE)
-- Anomaly Detection Threshold: Reconstruction error based threshold
+class ConvBiGRUAutoencoder(nn.Module):
+    def __init__(self, inp_dim, hid_dim, n_layers, dropout):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv1d(inp_dim, inp_dim * 2, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.BatchNorm1d(inp_dim * 2),
+            nn.Conv1d(inp_dim * 2, inp_dim * 2, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.BatchNorm1d(inp_dim * 2)
+        )
+        self.enc = nn.GRU(
+            inp_dim * 2,
+            hid_dim,
+            num_layers=n_layers,
+            batch_first=True,
+            bidirectional=True,
+            dropout=dropout
+        )
+        self.dec = nn.GRU(
+            hid_dim * 2,
+            inp_dim,
+            num_layers=n_layers,
+            batch_first=True
+        )
+
+    def forward(self, x):
+        x = x.permute(0, 2, 1)
+        x = self.conv(x)
+        x = x.permute(0, 2, 1)
+
+        B = x.size(0)
+        h0 = torch.zeros(
+            self.enc.num_layers * 2,
+            B,
+            self.enc.hidden_size,
+            device=x.device
+        )
+        enc_out, _ = self.enc(x, h0)
+        dec_out, _ = self.dec(enc_out)
+        return dec_out
+</pre>
+
+**Training Process:**
+<pre>
+1.  Load data using Data_Cleaning.py, including features, standardizing, and sliding window processing.
+2.  If the existing model & scaler exists, directly load it.
+3.  Otherwise, train a new model: define hyperparameters such as learning rate, batch size, and number of epochs.
+4.  Define the ConvBiGRUAutoencoder model structure and move it to the GPU or CPU for training.
+5.  Calculate static weights based on anomaly logs to enhance the model's attention to key metrics.
+6.  Use the Adam optimizer and CosineAnnealingLR learning rate scheduler.
+7.  Use MSE loss function and train in a loop. 
+8.  Implement early stopping to save the best model.
+</pre>
+
+**Key Hyperparameters:**
+<pre>
+- seq_length = 20
+- hidden_size = 64
+- num_layers = 2
+- dropout = 0.2
+- lr = 1e-3
+- batch_size = 64
+- num_epochs = 50
+- alpha = 1.0
+</pre>
+
+**Evaluation:**
+<pre>
+1.  The test data is split into validation and test sets.
+2.  Search for the best threshold on the validation set to maximize F1 score.
+3.  Evaluate the final performance of the model on the test set.
 </pre>
 
 ## Process Summary

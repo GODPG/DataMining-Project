@@ -1,3 +1,55 @@
+# Server Machine Dataset (SMD) - Anomaly Detection
+
+## Data Set Information:
+
+The Server Machine Dataset (SMD) is a publicly available dataset designed for anomaly detection in server machine telemetry data. Collected by NetMan, this dataset is derived from the research paper "Robust Anomaly Detection for Multivariate Time Series through Stochastic RNN." SMD provides a valuable resource for developing and evaluating machine learning models for predictive maintenance and system health monitoring in server environments.
+
+#### Key Dataset Characteristics:
+
+*   **Source:** Collected and made available by NetMan (see [https://github.com/NetManAIOps/OmniAnomaly](https://github.com/NetManAIOps/OmniAnomaly))
+*   **Related Publication:** "Robust Anomaly Detection for Multivariate Time Series through Stochastic RNN"
+*   **Time Span:** 5 weeks of data
+*   **Granularity:** 1-minute intervals (time index omitted from data files)
+*   **Number of Entities:** 28 distinct server machines (entities)
+*   **Dimensionality:** 38 data dimensions (metrics) per entity
+*   **Dataset Size:** 5,724,602,8 data points (1,411,200 total)
+*   **Train/Test Split:** 1:1 (approximately)
+*   **Labels:** Training set has no anomaly labels; testing set includes anomaly labels.
+*   **Interpretation Labels:** Provides lists of dimensions contributing to each anomaly (identifies the specific metrics causing the anomaly).
+
+#### Business Understanding
+
+##### What is Anomaly Detection in Server Machines?
+
+Modern data centers and cloud infrastructure rely on the stable operation of thousands of servers. Anomaly detection plays a crucial role in identifying unusual server behavior that may indicate underlying issues, such as hardware failures, software bugs, or security breaches. Early detection of anomalies can prevent service disruptions, reduce downtime, and improve overall system reliability.
+
+##### Dataset Benefits:
+
+This dataset is particularly valuable because it:
+
+*   Provides realistic, high-dimensional telemetry data from real server machines.
+*   Offers anomaly labels for the test set, enabling supervised or semi-supervised anomaly detection approaches.
+*   Includes interpretation labels, facilitating the investigation of root causes and the development of more explainable anomaly detection models.
+*   Is readily available and well-documented, making it easy to use for research and development purposes.
+
+#### Source:
+
+[https://github.com/NetManAIOps/OmniAnomaly](https://github.com/NetManAIOps/OmniAnomaly)
+
+## Data Understanding
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ConvBiGRU Autoencoder Anomaly Detection Project
 
 ## Introduction

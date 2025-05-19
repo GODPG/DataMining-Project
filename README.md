@@ -1,9 +1,3 @@
-<center>
-    <center>
-        <img src = "images/convbigru.png" width = 35%/>
-    </center>
-</center>
-
 ## Data Set Information:
 
 The SMD (Server Machine Dataset) is designed for anomaly detection in server machine telemetry data collected by NetMan. Derived from the "Robust Anomaly Detection for Multivariate Time Series through Stochastic RNN" paper, this project uses a ConvBiGRU Autoencoder for anomaly detection.

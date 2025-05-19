@@ -97,8 +97,8 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 │   └── scaler_new.pkl
 ├── README.md
 ├── Technical Report.ipynb
-├── Technical Report.ipynb
-├── Technical Report.ipynb
+├── Dataset Analysis and Preprocessing.ipynb
+├── Models Comparision.ipynb
 └── requirement.txt
 </pre>
 

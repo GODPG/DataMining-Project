@@ -80,7 +80,24 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 ├── saved_models
 │   ├── conv_bi_gru_autoencoder.pth
 │   └── scaler_new.pkl
+├── saved_models_lstm_ae
+│   ├── lstm_autoencoder.joblib
+│   └── scaler_lstm_ae.pkl
+├── saved_models_lstm_vae
+│   ├── lstm_vae.pth
+│   └── scaler_lstm_vae.pkl
+├── saved_models_lstm_predictor
+│   ├── lstm_predictor.pth
+│   └── scaler_lstm_predictor.pkl
+├── saved_models_if
+│   ├── isolation_forest_model.joblib
+│   └── scaler_new.pkl
+├── saved_models_pca
+│   ├── pca_model.joblib
+│   └── scaler_new.pkl
 ├── README.md
+├── Technical Report.ipynb
+├── Technical Report.ipynb
 ├── Technical Report.ipynb
 └── requirement.txt
 </pre>

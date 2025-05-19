@@ -47,6 +47,24 @@ The SMD dataset consists of text files in `machine-x-y.txt` format, with each li
 *   **test_label.txt:** Anomaly labels (0 or 1).
 *   **interpretation_label.txt:** Metrics contributing to each anomaly.
 
+## Project Overview and Notebook Descriptions
+
+This project implements a ConvBiGRU Autoencoder for anomaly detection in server machine telemetry data. The project is organized into several key components, including data processing, model training, and performance evaluation. The following Jupyter Notebooks detail each stage:
+
+*   **`Technical Report.ipynb`**: This notebook serves as a comprehensive technical deep-dive into the ConvBiGRU Autoencoder model. It meticulously details the entire process, from model architecture and training procedures to rigorous evaluation and optimization. Key aspects covered include hyperparameter tuning, loss function analysis, and a thorough examination of the model's performance metrics. It's designed for those seeking a detailed understanding of the ConvBiGRU Autoencoder's inner workings.
+
+*   **`Dataset Analysis and Preprocessing.ipynb`**: This notebook focuses on the initial steps of the project: understanding and preparing the dataset. It covers Exploratory Data Analysis (EDA) techniques used to gain insights into the data's characteristics, distributions, and potential anomalies. Additionally, it details the data cleaning and preprocessing steps applied to prepare the data for model training, including scaling, windowing, and handling missing values.
+
+*   **`Models Comparison.ipynb`**: This notebook provides a comparative analysis of the ConvBiGRU Autoencoder against five other anomaly detection models. It evaluates the performance of each model across various metrics (Accuracy, Precision, Recall, F1-score, ROC_AUC), highlighting the strengths and weaknesses of each approach. This comparative study demonstrates the effectiveness of the ConvBiGRU Autoencoder in the context of other anomaly detection techniques.
+
+## Recommended Reading Order
+
+To best understand this project, we recommend exploring the notebooks in the following order:
+
+1.  **`Dataset Analysis and Preprocessing.ipynb`**: Start with this notebook to gain a foundational understanding of the dataset and the preprocessing steps applied.
+2.  **`Technical Report.ipynb`**: Next, dive into this notebook for a detailed explanation of the ConvBiGRU Autoencoder model, its training, and evaluation.
+3.  **`Models Comparison.ipynb`**: Finally, explore this notebook to see how the ConvBiGRU Autoencoder compares to other anomaly detection models.
+
 ## Team collaboration - directory structure
 
 #### Instructions

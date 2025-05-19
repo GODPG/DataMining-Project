@@ -59,6 +59,26 @@ To best understand this project, we recommend exploring the notebooks in the fol
 2.  **`Technical Report.ipynb`**: Next, dive into this notebook for a detailed explanation of the ConvBiGRU Autoencoder model, its training, and evaluation.
 3.  **`Models Comparison.ipynb`**: Finally, explore this notebook to see how the ConvBiGRU Autoencoder compares to other anomaly detection models.
 
+## Directory Structure and Content
+
+The project directory is structured as follows:
+
+*   **`Processed_data`:** Contains the processed data files in CSV format, ready for model training and evaluation. These files are the output of the `Dataset Analysis and Preprocessing.ipynb` notebook.
+*   **`SeverMachineDataset`:** Stores the original, raw dataset files, as downloaded from the source. This directory includes the training data, testing data, anomaly labels, and interpretation labels.
+*   **`code`:** Includes the Python scripts (.py files) that implement the various functionalities of the project, such as data cleaning, preprocessing, model definition, training, evaluation, and visualization.
+*   **`saved_models`:** Contains the trained ConvBiGRU Autoencoder model (`conv_bi_gru_autoencoder.pth`) and the corresponding scaler (`scaler_new.pkl`) used for data scaling.
+*   **`saved_models_lstm_ae`:** Contains the trained LSTM Autoencoder model (`lstm_autoencoder.joblib`) and the corresponding scaler (`scaler_lstm_ae.pkl`).
+*   **`saved_models_lstm_vae`:** Contains the trained LSTM Variational Autoencoder model (`lstm_vae.pth`) and the corresponding scaler (`scaler_lstm_vae.pkl`).
+*   **`saved_models_lstm_predictor`:** Contains the trained LSTM Predictor model (`lstm_predictor.pth`) and the corresponding scaler (`scaler_lstm_predictor.pkl`).
+*   **`saved_models_if`:** Contains the trained Isolation Forest model (`isolation_forest_model.joblib`) and the corresponding scaler (`scaler_new.pkl`).
+*   **`saved_models_pca`:** Contains the trained PCA model (`pca_model.joblib`) and the corresponding scaler (`scaler_new.pkl`).
+*   **`presentation`:** Contains the PowerPoint presentation (`.ppt` or `.pptx`) file used to present the project.
+*   **`Technical Report.ipynb`:** (Described above)
+*   **`Dataset Analysis and Preprocessing.ipynb`:** (Described above)
+*   **`Models Comparison.ipynb`:** (Described above)
+*   **`README.md`:** (This file) Provides an overview of the project, including data set information, project objectives, and instructions for running the code.
+*   **`requirement.txt`:** Lists the Python packages required to run the project.
+
 ## Team collaboration - directory structure
 
 #### Instructions
@@ -220,6 +240,3 @@ class ConvBiGRUAutoencoder(nn.Module):
 - Improved anomaly detection accuracy
 - Identifying key metrics contributing to anomalies
 
-<center>
-    <img src = "images/copyright.png" width = 15%, align = "right"/>
-</center>

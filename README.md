@@ -1,60 +1,196 @@
-# ConvBiGRU Autoencoder Anomaly Detection Project
+<center>
+    <center>
+        <img src = "images/convbigru.png" width = 35%/>
+    </center>
+</center>
 
-## Introduction
+## Data Set Information:
 
-This project aims to develop a machine learning-based anomaly detection system for identifying unusual behavior in time-series data. We leverage a ConvBiGRU Autoencoder model to learn patterns from normal data and detect anomalies by identifying deviations from those patterns.
+The SMD (Server Machine Dataset) is designed for anomaly detection in server machine telemetry data collected by NetMan. Derived from the "Robust Anomaly Detection for Multivariate Time Series through Stochastic RNN" paper, this project uses a ConvBiGRU Autoencoder for anomaly detection.
 
-## Problem Statement
+#### Business Understanding
 
-In many real-world applications, such as server monitoring and industrial equipment maintenance, the timely detection of anomalous behavior is critical. This project addresses the following questions:
+##### What is Anomaly Detection in Server Machines?
 
-*   How can we accurately detect anomalous behavior in time-series data?
-*   How can we utilize machine learning techniques to identify normal and abnormal patterns?
-*   How can we build an easily understandable and deployable anomaly detection system?
+Modern data centers rely on thousands of servers. Anomaly detection identifies unusual server behavior that may indicate hardware failures or security breaches. Early detection prevents service disruptions.
 
-## Key Findings
+##### Why ConvBiGRU Autoencoder?
 
-*   We successfully developed an anomaly detection model based on a ConvBiGRU Autoencoder.
-*   The model can effectively learn patterns from normal data and identify anomalies by detecting deviations from those patterns.
-*   Experimental results demonstrate that the model performs well on the test dataset.
-*   The use of Winsorize clipping significantly improved the model's performance and robustness.
+The ConvBiGRU Autoencoder captures temporal dependencies and spatial features in the telemetry data. Its unsupervised nature allows it to learn normal server behavior and detect deviations.
 
-## Model Performance
+*   **Temporal Dependencies:** BiGRU captures temporal patterns.
+*   **Spatial Features:** Convolutional layers extract spatial features from metrics.
+*   **Unsupervised Learning:** Learns normal data representations without labeled anomalies.
 
-The model achieved the following performance metrics on the test dataset:
+##### Using Interpretation Labels
 
-*   **Accuracy:** \[0.940]
-*   **F1-score:** \[0.680]
-*   **AUC:** \[0.965]
-*   **Best Threshold:** \[13.341736]
+The `interpretation_label.txt` identifies the metrics contributing to each anomaly, facilitating root cause analysis.
 
-Confusion Matrix:
-[12475  332]
-[519    904]
+#### Source:
+
+NetMan ([https://github.com/NetManAIOps/OmniAnomaly](https://github.com/NetManAIOps/OmniAnomaly))
+
+## Data Understanding
+<pre>
+Data Set Characteristics:  Time-Series, Multivariate
+Area: System Monitoring, Anomaly Detection
+Attribute Characteristics: Real
+Missing Values? None
+</pre>
+
+#### Attribute Information:
+
+The SMD dataset consists of text files in `machine-x-y.txt` format, with each line representing a 1-minute interval and containing 38 server metrics.
+
+*   **train/:** Training data (normal behavior only).
+*   **test/:** Testing data (normal and anomalous behavior).
+*   **test_label.txt:** Anomaly labels (0 or 1).
+*   **interpretation_label.txt:** Metrics contributing to each anomaly.
+
+## Team collaboration - directory structure
+
+#### Instructions
+<pre>
+- Clone the GitHub repository
+- Run the notebooks in sequence
+- Trained ConvBiGRU Autoencoder model will be in the models directory.
+
+├── Processed_data
+│   ├── machine-1-1/
+│   │   ├── machine-1-1_test.csv
+│   │   └──  machine-1-1_train.csv
+├── SeverMachineDataset
+│   ├── interpretation_label
+│   │   └── machine-1-1.txt
+│   ├── test
+│   │   └── machine-1-1.txt
+│   ├── test_label
+│   │   └── machine-1-1.txt
+│   ├── train
+│   │   └── machine-1-1.txt
+│   └── LICENSE
+├── code
+│   ├── data_cleaning.py
+│   ├── data_preprocessing.py
+│   ├── evaluate.py
+│   ├── main.py
+│   ├── model.py
+│   ├── train.py
+│   └── visualize.py
+├── saved_models
+│   ├── conv_bi_gru_autoencoder.pth
+│   └── scaler_new.pkl
+├── README.md
+├── Technical Report.ipynb
+└── requirement.txt
+</pre>
 
 
-These results indicate that the model can identify anomalous behavior with reasonable accuracy.
+#### Data Pre-processing Steps
+<pre>
+1.  Data Windowing: Create sequences using a sliding window.
+2.  Reshape Data: [Samples, timesteps, features]
+3.  Scaling data: Use MinMaxScaler to scale between 0 and 1.
+</pre>
 
-## Potential Improvements
+## Data Preparation and Visualization
+<pre>
+Code Used: Python
+Packages: Pandas, NumPy, Matplotlib, Seaborn, plotly
+</pre>
 
-Here are some potential areas for improvement:
+## Data Cleansing, processing, and modeling
+<pre>
+Code Used: Python
+Packages: Pandas, scikit-learn, torch, torch.nn, torch.optim
+</pre>
 
-*   **Hyperparameter Optimization:** Further tuning the model's hyperparameters (e.g., learning rate, batch size, number of layers) could improve performance.
-*   **Feature Engineering:** Adding more relevant features, such as statistical or domain-specific features, could enhance the model.
-*   **Ensemble Learning:** Experimenting with ensemble methods (combining multiple models) could improve robustness and accuracy.
-*   **Model Interpretability:** Investigating ways to improve the model's interpretability to better understand its decision-making process.
+**ConvBiGRU Autoencoder Model:**
+<pre>
+class ConvBiGRUAutoencoder(nn.Module):
+    def __init__(self, inp_dim, hid_dim, n_layers, dropout):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv1d(inp_dim, inp_dim * 2, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.BatchNorm1d(inp_dim * 2),
+            nn.Conv1d(inp_dim * 2, inp_dim * 2, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.BatchNorm1d(inp_dim * 2)
+        )
+        self.enc = nn.GRU(
+            inp_dim * 2,
+            hid_dim,
+            num_layers=n_layers,
+            batch_first=True,
+            bidirectional=True,
+            dropout=dropout
+        )
+        self.dec = nn.GRU(
+            hid_dim * 2,
+            inp_dim,
+            num_layers=n_layers,
+            batch_first=True
+        )
 
-## Usage Instructions
+    def forward(self, x):
+        x = x.permute(0, 2, 1)
+        x = self.conv(x)
+        x = x.permute(0, 2, 1)
 
-1.  **Environment Setup:** Ensure that you have installed all necessary libraries, including `torch`, `scikit-learn`, `pandas`, `plotly`, etc.
-2.  **Data Preparation:** Place your training and testing data in the correct location.
-3.  **Run the Script:** Execute the `main.py` script to train, evaluate, and visualize the model.
+        B = x.size(0)
+        h0 = torch.zeros(
+            self.enc.num_layers * 2,
+            B,
+            self.enc.hidden_size,
+            device=x.device
+        )
+        enc_out, _ = self.enc(x, h0)
+        dec_out, _ = self.dec(enc_out)
+        return dec_out
+</pre>
 
-## Contributions
+**Training Process:**
+<pre>
+1.  Load data using Data_Cleaning.py, including features, standardizing, and sliding window processing.
+2.  If the existing model & scaler exists, directly load it.
+3.  Otherwise, train a new model: define hyperparameters such as learning rate, batch size, and number of epochs.
+4.  Define the ConvBiGRUAutoencoder model structure and move it to the GPU or CPU for training.
+5.  Calculate static weights based on anomaly logs to enhance the model's attention to key metrics.
+6.  Use the Adam optimizer and CosineAnnealingLR learning rate scheduler.
+7.  Use MSE loss function and train in a loop. 
+8.  Implement early stopping to save the best model.
+</pre>
 
-Contributions of any kind are welcome, including code, documentation, and suggestions.
+**Key Hyperparameters:**
+<pre>
+- seq_length = 20
+- hidden_size = 64
+- num_layers = 2
+- dropout = 0.2
+- lr = 1e-3
+- batch_size = 64
+- num_epochs = 50
+- alpha = 1.0
+</pre>
 
-## License
+**Evaluation:**
+<pre>
+1.  The test data is split into validation and test sets.
+2.  Search for the best threshold on the validation set to maximize F1 score.
+3.  Evaluate the final performance of the model on the test set.
+</pre>
 
-\[Insert your license information here]
+## Process Summary
+**By performing ConvBiGRU Autoencoder model, we aimed to get better at predictively optimizing following**
+- Minimize downtime
+- Proactive remediation of issues
+- Improve overall system reliability
+- Reduce operational costs
+- Optimize resource allocation
+- Improved anomaly detection accuracy
+- Identifying key metrics contributing to anomalies
 
+<center>
+    <img src = "images/copyright.png" width = 15%, align = "right"/>
+</center>
